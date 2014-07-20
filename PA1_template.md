@@ -46,7 +46,7 @@ median(daily.steps$steps)
 
 ```r
 interval.steps <- aggregate(steps ~ interval, data=activity, FUN=mean)
-plot(interval.steps, type="1")
+plot(interval.steps, type= "1")
 ```
 
 ```
