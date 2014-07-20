@@ -45,20 +45,15 @@ median(daily.steps$steps)
 
 
 ```r
-interval.steps <- aggregate(steps ~ interval, data=activty, FUN=mean)
+interval.steps <- aggregate(steps ~ interval, data=activity, FUN=mean)
+plot(interval.steps, type="1")
 ```
 
 ```
-## Error: object 'activty' not found
+## Error: invalid plot type '1'
 ```
 
-```r
-plot(interval, type="1")
-```
-
-```
-## Error: object 'interval' not found
-```
+![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-4.png) 
 
 2. Which 5-minute interval, on average across all the days in the
    dataset, contains the maximum number of steps?
@@ -69,7 +64,7 @@ interval.steps$interval[which.max(interval.steps$steps)]
 ```
 
 ```
-## Error: object 'interval.steps' not found
+## [1] 835
 ```
 
 
@@ -97,22 +92,8 @@ sum(is.na(activity))
 
 ```r
 activity <- merge(activity, interval.steps, by="interval", suffixes=c("",".y"))
-```
-
-```
-## Error: object 'interval.steps' not found
-```
-
-```r
 nas <- is.na(activity$steps)
 activity$steps[nas] <- activity$steps.y[nas]
-```
-
-```
-## Error: replacement has length zero
-```
-
-```r
 activity <- activity[,c(1:3)]
 ```
 

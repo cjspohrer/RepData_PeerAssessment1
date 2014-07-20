@@ -234,17 +234,14 @@ interval (x-axis) and the average number of steps taken, averaged
 across all days (y-axis)</li>
 </ol>
 
-<pre><code class="r">interval.steps &lt;- aggregate(steps ~ interval, data=activty, FUN=mean)
+<pre><code class="r">interval.steps &lt;- aggregate(steps ~ interval, data=activity, FUN=mean)
+plot(interval.steps, type=&quot;1&quot;)
 </code></pre>
 
-<pre><code>## Error: object &#39;activty&#39; not found
+<pre><code>## Error: invalid plot type &#39;1&#39;
 </code></pre>
 
-<pre><code class="r">plot(interval, type=&quot;1&quot;)
-</code></pre>
-
-<pre><code>## Error: object &#39;interval&#39; not found
-</code></pre>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAfgAAAH4CAMAAACR9g9NAAAABlBMVEX9/v39/v17TDFfAAAAAnRSTlP/AOW3MEoAAAAJcEhZcwAACxIAAAsSAdLdfvwAAASISURBVHic7dExDQAACMAw8G8aGRxrFSzZLEnzHcAP46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzI+yvgo46OMjzqVy+BudrHIxgAAAABJRU5ErkJggg==" alt="plot of chunk unnamed-chunk-4"/> </p>
 
 <ol>
 <li>Which 5-minute interval, on average across all the days in the
@@ -254,7 +251,7 @@ dataset, contains the maximum number of steps?</li>
 <pre><code class="r">interval.steps$interval[which.max(interval.steps$steps)]
 </code></pre>
 
-<pre><code>## Error: object &#39;interval.steps&#39; not found
+<pre><code>## [1] 835
 </code></pre>
 
 <h2>Imputing missing values</h2>
@@ -280,19 +277,9 @@ the missing data filled in.</p></li>
 </ol>
 
 <pre><code class="r">activity &lt;- merge(activity, interval.steps, by=&quot;interval&quot;, suffixes=c(&quot;&quot;,&quot;.y&quot;))
-</code></pre>
-
-<pre><code>## Error: object &#39;interval.steps&#39; not found
-</code></pre>
-
-<pre><code class="r">nas &lt;- is.na(activity$steps)
+nas &lt;- is.na(activity$steps)
 activity$steps[nas] &lt;- activity$steps.y[nas]
-</code></pre>
-
-<pre><code>## Error: replacement has length zero
-</code></pre>
-
-<pre><code class="r">activity &lt;- activity[,c(1:3)]
+activity &lt;- activity[,c(1:3)]
 </code></pre>
 
 <ol>
