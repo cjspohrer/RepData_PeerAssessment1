@@ -8,27 +8,32 @@ activity <- read.csv("activity.csv")
 ```
 
 ## What is mean total number of steps taken per day?
-1. Histogram of total steps taken each day. 
+1. Make a histogram of the total number of steps taken each day
+
 ```{r}
 daily.steps <- aggregate(steps ~ date, data=activty, FUN=sum)
 barplot(daily.steps$steps, names.arg=daily.steps$date, xlab="data", ylab="steps"
 ```
 
-2. Calculate mean and median of steps taken
+2. Calculate and report the **mean** and **median** total number of steps taken per day
+
 ```{r}
 mean(daily.steps$steps)
 median(daily.steps$steps)
 ```
 
 ## What is the average daily activity pattern?
-1. Time series plot of 5 min interval and average steps taken across all days.
+1. Make a time series plot (i.e. `type = "l"`) of the 5-minute
+   interval (x-axis) and the average number of steps taken, averaged
+   across all days (y-axis)
 
 ```{r}
 interval.steps <- aggregate(steps ~ interval, data=activty, FUN=mean)
 plot(interval, type="1")
 ```
 
-2. Which 5 min interval contains the max number of steps
+2. Which 5-minute interval, on average across all the days in the
+   dataset, contains the maximum number of steps?
 
 ```{r}
 interval.steps$interval[which.max(interval.steps$steps)]
@@ -36,21 +41,33 @@ interval.steps$interval[which.max(interval.steps$steps)]
 
 
 ## Imputing missing values
-1. Calculate missing values in the dataset
+1. Calculate and report the total number of missing values in the
+   dataset (i.e. the total number of rows with `NA`s)
 
 ```{r}
 sum(is.na(activity))
 ```
 
-2. Fill missing values 
+2. Devise a strategy for filling in all of the missing values in the
+   dataset. The strategy does not need to be sophisticated. For
+   example, you could use the mean/median for that day, or the mean
+   for that 5-minute interval, etc. 
 
+3. Create a new dataset that is equal to the original dataset but with
+   the missing data filled in.
+   
 ```{r}
 activity <- merge(activity, interval.steps, by="interval", suffixes=c("",".y"))
 nas <- is.na(activity$steps)
 activity$steps[nas] <- activity$steps.y[nas]
 activity <- activity[,c(1:3)]
 
-3. Histogram of steps taken. 
+4. Make a histogram of the total number of steps taken each day and
+   Calculate and report the **mean** and **median** total number of
+   steps taken per day. Do these values differ from the estimates from
+   the first part of the assignment? What is the impact of imputing
+   missing data on the estimates of the total daily number of steps?
+
 ```{r}
 steps.date <- aggregate(steps ~ date, data=activity, FUN=sum)
 barplot(daily.steps$steps, names.arg=daily.steps$date, xlab="date", ylab="steps")
@@ -60,7 +77,9 @@ median(daily.steps$steps)
 
 
 ## Are there differences in activity patterns between weekdays and weekends?
-1. Create a new factor variable in the dataset with "weekday" and "weekend"
+1. Create a new factor variable in the dataset with two levels --
+   "weekday" and "weekend" indicating whether a given date is a
+   weekday or weekend day.
 
 ```{r, cache=TRUE}
 day.type <- function(date) {
@@ -73,7 +92,10 @@ day.type <- function(date) {
 activity$day.type <- as.factor(sapply(activity$date, day.type))
 ```
 
-2. Make a panel plot containing a time series plot of the 5-minute interval and average steps
+2. Make a panel plot containing a time series plot (i.e. `type = "l"`)
+   of the 5-minute interval (x-axis) and the average number of steps
+   taken, averaged across all weekday days or weekend days
+   (y-axis).
 
 ```{r}
 par(mfrow=c(2,1))
