@@ -12,7 +12,7 @@ activity <- read.csv("activity.csv")
 
 ```{r}
 daily.steps <- aggregate(steps ~ date, data=activty, FUN=sum)
-barplot(daily.steps$steps, names.arg=daily.steps$date, xlab="data", ylab="steps"
+barplot(daily.steps$steps, names.arg=daily.steps$date, xlab="data", ylab="steps")
 ```
 
 2. Calculate and report the **mean** and **median** total number of steps taken per day
