@@ -9,6 +9,7 @@ activity <- read.csv("activity.csv")
 ```
 
 ## What is mean total number of steps taken per day?
+
 1. Make a histogram of the total number of steps taken each day
 
 
@@ -39,6 +40,7 @@ median(daily.steps$steps)
 ```
 
 ## What is the average daily activity pattern?
+
 1. Make a time series plot (i.e. `type = "l"`) of the 5-minute
    interval (x-axis) and the average number of steps taken, averaged
    across all days (y-axis)
@@ -46,11 +48,7 @@ median(daily.steps$steps)
 
 ```r
 interval.steps <- aggregate(steps ~ interval, data=activity, FUN=mean)
-plot(interval.steps, type = "1")
-```
-
-```
-## Error: invalid plot type '1'
+plot(interval.steps, type="l")
 ```
 
 ![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-4.png) 
@@ -69,6 +67,7 @@ interval.steps$interval[which.max(interval.steps$steps)]
 
 
 ## Imputing missing values
+
 1. Calculate and report the total number of missing values in the
    dataset (i.e. the total number of rows with `NA`s)
 
@@ -128,6 +127,7 @@ median(daily.steps$steps)
 ```
 
 ## Are there differences in activity patterns between weekdays and weekends?
+
 1. Create a new factor variable in the dataset with two levels --
    "weekday" and "weekend" indicating whether a given date is a
    weekday or weekend day.
