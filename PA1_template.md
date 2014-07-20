@@ -13,20 +13,11 @@ activity <- read.csv("activity.csv")
 
 
 ```r
-daily.steps <- aggregate(steps ~ date, data=activty, FUN=sum)
-```
-
-```
-## Error: object 'activty' not found
-```
-
-```r
+daily.steps <- aggregate(steps ~ date, data=activity, FUN=sum)
 barplot(daily.steps$steps, names.arg=daily.steps$date, xlab="data", ylab="steps")
 ```
 
-```
-## Error: object 'daily.steps' not found
-```
+![plot of chunk unnamed-chunk-2](figure/unnamed-chunk-2.png) 
 
 2. Calculate and report the **mean** and **median** total number of steps taken per day
 
@@ -36,7 +27,7 @@ mean(daily.steps$steps)
 ```
 
 ```
-## Error: object 'daily.steps' not found
+## [1] 10766
 ```
 
 ```r
@@ -44,7 +35,7 @@ median(daily.steps$steps)
 ```
 
 ```
-## Error: object 'daily.steps' not found
+## [1] 10765
 ```
 
 ## What is the average daily activity pattern?
@@ -137,16 +128,14 @@ steps.date <- aggregate(steps ~ date, data=activity, FUN=sum)
 barplot(daily.steps$steps, names.arg=daily.steps$date, xlab="date", ylab="steps")
 ```
 
-```
-## Error: object 'daily.steps' not found
-```
+![plot of chunk unnamed-chunk-8](figure/unnamed-chunk-8.png) 
 
 ```r
 mean(daily.steps$steps)
 ```
 
 ```
-## Error: object 'daily.steps' not found
+## [1] 10766
 ```
 
 ```r
@@ -154,7 +143,7 @@ median(daily.steps$steps)
 ```
 
 ```
-## Error: object 'daily.steps' not found
+## [1] 10765
 ```
 
 ## Are there differences in activity patterns between weekdays and weekends?
