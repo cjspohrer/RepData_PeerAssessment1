@@ -29,7 +29,7 @@ median(daily.steps$steps)
 
 ```{r}
 interval.steps <- aggregate(steps ~ interval, data=activity, FUN=mean)
-plot(interval.steps, type= "1")
+plot(interval.steps, type = "1")
 ```
 
 2. Which 5-minute interval, on average across all the days in the
