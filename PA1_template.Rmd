@@ -4,13 +4,13 @@
 ## Loading and preprocessing the data
 ```{r}
 unzip("activity.zip")
-data <- read.csv("activity.csv")
+activity <- read.csv("activity.csv")
 ```
 
 ## What is mean total number of steps taken per day?
 1. Histogram of total steps taken each day. 
 ```{r}
-daily.steps <- aggregate(steps ~ date, data=data, FUN=sum)
+daily.steps <- aggregate(steps ~ date, data=activty, FUN=sum)
 barplot(daily.steps$steps, names.arg=daily.steps$date, xlab="data", ylab="steps"
 ```
 
@@ -21,11 +21,67 @@ median(daily.steps$steps)
 ```
 
 ## What is the average daily activity pattern?
+1. Time series plot of 5 min interval and average steps taken across all days.
 
+```{r}
+interval.steps <- aggregate(steps ~ interval, data=activty, FUN=mean)
+plot(interval, type="1")
+```
+
+2. Which 5 min interval contains the max number of steps
+
+```{r}
+interval.steps$interval[which.max(interval.steps$steps)]
+```
 
 
 ## Imputing missing values
+1. Calculate missing values in the dataset
 
+```{r}
+sum(is.na(activity))
+```
+
+2. Fill missing values 
+
+```{r}
+activity <- merge(activity, interval.steps, by="interval", suffixes=c("",".y"))
+nas <- is.na(activity$steps)
+activity$steps[nas] <- activity$steps.y[nas]
+activity <- activity[,c(1:3)]
+
+3. Histogram of steps taken. 
+```{r}
+steps.date <- aggregate(steps ~ date, data=activity, FUN=sum)
+barplot(daily.steps$steps, names.arg=daily.steps$date, xlab="date", ylab="steps")
+mean(daily.steps$steps)
+median(daily.steps$steps)
+```
 
 
 ## Are there differences in activity patterns between weekdays and weekends?
+1. Create a new factor variable in the dataset with "weekday" and "weekend"
+
+```{r, cache=TRUE}
+day.type <- function(date) {
+    if (weekdays(as.Date(date)) %in% c("Saturday", "Sunday")) {
+        "weekend"
+    } else {
+        "weekday"
+    }
+}
+activity$day.type <- as.factor(sapply(activity$date, day.type))
+```
+
+2. Make a panel plot containing a time series plot of the 5-minute interval and average steps
+
+```{r}
+par(mfrow=c(2,1))
+for (type in c("weekend", "weekday")) {
+    steps.type <- aggregate(steps ~ interval,
+                            data=activity,
+                            subset=activity$day.type==type,
+                            FUN=mean)
+    plot(steps.type, type="l", main=type)
+}
+```
