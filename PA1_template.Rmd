@@ -11,7 +11,7 @@ activity <- read.csv("activity.csv")
 1. Make a histogram of the total number of steps taken each day
 
 ```{r}
-daily.steps <- aggregate(steps ~ date, data=activty, FUN=sum)
+daily.steps <- aggregate(steps ~ date, data=activity, FUN=sum)
 barplot(daily.steps$steps, names.arg=daily.steps$date, xlab="data", ylab="steps")
 ```
 
