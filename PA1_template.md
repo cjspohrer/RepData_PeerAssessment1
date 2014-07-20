@@ -104,8 +104,91 @@ sum(is.na(activity))
    the missing data filled in.
    
 
+```r
+activity <- merge(activity, interval.steps, by="interval", suffixes=c("",".y"))
+```
+
+```
+## Error: object 'interval.steps' not found
+```
+
+```r
+nas <- is.na(activity$steps)
+activity$steps[nas] <- activity$steps.y[nas]
+```
+
+```
+## Error: replacement has length zero
+```
+
+```r
+activity <- activity[,c(1:3)]
+```
+
+4. Make a histogram of the total number of steps taken each day and
+   Calculate and report the **mean** and **median** total number of
+   steps taken per day. Do these values differ from the estimates from
+   the first part of the assignment? What is the impact of imputing
+   missing data on the estimates of the total daily number of steps?
 
 
+```r
+steps.date <- aggregate(steps ~ date, data=activity, FUN=sum)
+barplot(daily.steps$steps, names.arg=daily.steps$date, xlab="date", ylab="steps")
+```
+
+```
+## Error: object 'daily.steps' not found
+```
+
+```r
+mean(daily.steps$steps)
+```
+
+```
+## Error: object 'daily.steps' not found
+```
+
+```r
+median(daily.steps$steps)
+```
+
+```
+## Error: object 'daily.steps' not found
+```
+
+## Are there differences in activity patterns between weekdays and weekends?
+1. Create a new factor variable in the dataset with two levels --
+   "weekday" and "weekend" indicating whether a given date is a
+   weekday or weekend day.
 
 
+```r
+day.type <- function(date) {
+    if (weekdays(as.Date(date)) %in% c("Saturday", "Sunday")) {
+        "weekend"
+    } else {
+        "weekday"
+    }
+}
+activity$day.type <- as.factor(sapply(activity$date, day.type))
+```
 
+2. Make a panel plot containing a time series plot (i.e. `type = "l"`)
+   of the 5-minute interval (x-axis) and the average number of steps
+   taken, averaged across all weekday days or weekend days
+   (y-axis).
+
+
+```r
+par(mfrow=c(2,1))
+for (type in c("weekend", "weekday")) {
+    steps.type <- aggregate(steps ~ interval,
+                            data=activity,
+                            subset=activity$day.type==type,
+                            FUN=mean)
+    plot(steps.type, type="l", main=type)
+}
+```
+
+![plot of chunk unnamed-chunk-10](figure/unnamed-chunk-10.png) 
